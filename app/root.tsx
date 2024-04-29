@@ -5,13 +5,14 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import './styles/index.css'
+import { cssBundleHref } from "@remix-run/css-bundle";
 
 import type { LinksFunction } from "@remix-run/node";
-import stylesheet from "./styles/index.css";
+import styles from "./tailwind.css?url";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: styles },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -24,7 +25,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <div className="bg-red-500" >hi</div>
         {children}
         <ScrollRestoration />
         <Scripts />
