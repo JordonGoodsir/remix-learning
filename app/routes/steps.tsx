@@ -40,7 +40,7 @@ export default function Index() {
       <img className="w-full z-10 absolute top-0 left-0 right-0 bottom-0" src="/assets/images/bg-sidebar-mobile.svg" />
 
 
-      <div className="h-full relative basis-auto shrink-1 grow-1 overflow-hidden bg-lightGray">
+      <div className="h-full relative basis-auto shrink-1 grow-1 overflow-y-auto overflow-x-hidden bg-lightGray">
         <div className="flex z-20 relative bg-white px-6 py-7 rounded-sm mx-5 rounded-xl shadow mb-5">
           <Outlet />
         </div>
