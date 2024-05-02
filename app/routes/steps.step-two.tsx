@@ -29,12 +29,12 @@ export default function StepTwo() {
                 return (
                     <div key={planName}>
                         <SelectableContainer selected={selectedPlan === planName} onSelected={() => setSelectedPlan(planName)} content={
-                            <div className="flex gap-2">
+                            <div className="flex gap-3">
                                 <img src={`/assets/images/${planImages[planName]}`} />
                                 <div className="flex flex-col">
-                                    <h5>{planName}</h5>
-                                    <p>{`$${planOptions[yearlyToggle ? 'yearly' : 'monthly'][planName].price}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
-                                    {yearlyToggle ? <p className="text-marineBlue">2 months free</p> : null}
+                                    <h5 className="text-lg text-marineBlue font-medium">{planName}</h5>
+                                    <p className="text-coolGray">{`$${planOptions[yearlyToggle ? 'yearly' : 'monthly'][planName].price}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
+                                    {yearlyToggle ? <p className="text-marineBlue text-sm">2 months free</p> : null}
                                 </div>
                             </div>
                         } />
