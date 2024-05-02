@@ -1,3 +1,4 @@
+import { useState } from "react";
 import HeaderAndText from "./components/HeaderAndText";
 import SelectableContainer from "./components/SelectableContainer"
 
@@ -6,9 +7,11 @@ export default function StepTwo() {
     const yearlyToggle = false
 
     const planOptions = {
-        yearly: [{ price: '90', name: 'Arcade' }, { price: '120', name: 'Advanced' }, { price: '150', name: 'Pro' },],
-        monthly: [{ price: '9', name: 'Arcade' }, { price: '12', name: 'Advanced' }, { price: '15', name: 'Pro' },]
+        yearly: { Arcade: { price: 90 }, Advanced: { price: 120 }, Pro: { price: 150 } },
+        monthly: { Arcade: { price: 9 }, Advanced: { price: 12 }, Pro: { price: 15 } },
     }
+
+    const [selectedPlan, setSelectedPlan] = useState('')
 
     const planImages = {
         Arcade: 'icon-arcade.svg',
@@ -20,14 +23,14 @@ export default function StepTwo() {
         <div className="flex flex-col gap-5">
             <HeaderAndText header="Select your plan" body="You have the option of monthly or yearly billing." />
 
-            {planOptions[yearlyToggle ? 'yearly' : 'monthly'].map((option) => {
+            {Object.keys(planOptions[yearlyToggle ? 'yearly' : 'monthly']).map((planName) => {
                 return (
-                    <SelectableContainer selected={false} content={
+                    <SelectableContainer selected={selectedPlan === planName} onSelected={() => setSelectedPlan(planName)} content={
                         <div className="flex gap-2">
-                            <img src={`/assets/images/${planImages[option.name]}`} />
+                            <img src={`/assets/images/${planImages[planName]}`} />
                             <div className="flex flex-col">
-                                <h5>{option.name}</h5>
-                                <p>{`$${option.price}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
+                                <h5>{planName}</h5>
+                                <p>{`$${planOptions[yearlyToggle ? 'yearly' : 'monthly'][planName].price}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
                             </div>
                         </div>
                     } />
