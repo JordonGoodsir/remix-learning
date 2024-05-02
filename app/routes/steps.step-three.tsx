@@ -14,21 +14,15 @@ export default function StepThree() {
 
     let updatedAddOns = [...selectedAddOns]
 
-    if(foundAddOnIndex > -1) { 
+    if (foundAddOnIndex > -1) {
       updatedAddOns.splice(foundAddOnIndex, 1)
-    } else { 
+    } else {
       updatedAddOns.push(addOn)
     }
 
     setSelectedAddOns(updatedAddOns)
 
   }
-
-
-  // const addOnOptions = {
-  //   yearly: { 'Online service': { price: 10 }, 'Larger storage': { price: 20 }, 'Customizable Profile': { price: 20 } },
-  //   monthly: { 'Online service': { price: 1 }, 'Larger storage': { price: 2 }, 'Customizable Profile': { price: 2 } },
-  // }
 
   const addOnOptions = {
     'Online service': { price: { monthly: 1, yearly: '10' }, description: 'Access to multiplayer games' },
@@ -46,12 +40,15 @@ export default function StepThree() {
         return (
           <div key={addOn}>
             <SelectableContainer selected={selectedAddOns.includes(addOn)} onSelected={() => addAddOn(addOn)} content={
-              <div className="flex gap-3 justify-between">
-                <div className="flex flex-col">
-                  <h5 className="text-lg text-marineBlue font-medium">{addOn}</h5>
-                  <p className="text-lightGray">{addOnOptions[addOn].description}</p>
+              <div className="flex gap-3 justify-between items-center">
+                <div className="flex gap-3 items-center">
+                  <div className={`h-5 w-5 flex items-center justify-center rounded-md ${selectedAddOns.includes(addOn) ? 'bg-purplishBlue' : 'bg-white border border-coolGrey'}`}>{selectedAddOns.includes(addOn) ? <img src="/assets/images/icon-checkmark.svg" /> : null}</div>
+                  <div className="flex flex-col">
+                    <h5 className="text-marineBlue font-medium">{addOn}</h5>
+                    <p className="text-coolGray text-xs">{addOnOptions[addOn].description}</p>
+                  </div>
                 </div>
-                <p className="text-coolGray">{`$${addOnOptions[addOn].price[yearlyToggle ? 'yearly' : 'monthly']}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
+                <p className="text-purplishBlue text-sm">{`+$${addOnOptions[addOn].price[yearlyToggle ? 'yearly' : 'monthly']}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
               </div>
             } />
           </div>

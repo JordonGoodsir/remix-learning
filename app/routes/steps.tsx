@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, Outlet, json, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, json, useBeforeUnload, useLoaderData } from "@remix-run/react";
 import { useLocation } from "@remix-run/react";
 import CustomButton from "~/routes/components/CustomButton"
 import { useNavigate } from "@remix-run/react";

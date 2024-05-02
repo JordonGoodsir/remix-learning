@@ -6,6 +6,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
+import store from './store'
+import { Provider } from 'react-redux'
 
 import type { LinksFunction } from "@remix-run/node";
 import styles from "./tailwind.css?url";
@@ -25,7 +27,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <Provider store={store}>
+          {children}
+        </Provider>
+
         <ScrollRestoration />
         <Scripts />
       </body>
