@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HeaderAndText from "./components/HeaderAndText";
 import SelectableContainer from "./components/SelectableContainer"
-import Toggle from "./components/Toggle";
 import ToggleYearlyGroup from "./components/stepTwo/ToggleYearlyGroup";
 
 
