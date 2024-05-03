@@ -4,24 +4,13 @@ import ToggleYearlyGroup from "./components/stepTwo/ToggleYearlyGroup";
 import { useDispatch, useSelector } from 'react-redux'
 import { setForm } from '~/stores/form'
 import { useEffect, useState } from "react";
+import { planOptions, planImages } from "~/globals/planData";
 
 
 export default function StepTwo() {
     const dispatch = useDispatch()
     const initForm = useSelector((state) => state.formStore).form
     const [updatedForm, setUpdatedForm] = useState({ ...initForm })
-
-
-    const planOptions = {
-        yearly: { Arcade: { price: 90 }, Advanced: { price: 120 }, Pro: { price: 150 } },
-        monthly: { Arcade: { price: 9 }, Advanced: { price: 12 }, Pro: { price: 15 } },
-    }
-
-    const planImages = {
-        Arcade: 'icon-arcade.svg',
-        Advanced: 'icon-advanced.svg',
-        Pro: 'icon-pro.svg',
-    }
 
     useEffect(() => {
         setUpdatedForm(initForm)

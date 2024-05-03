@@ -3,7 +3,7 @@ import SelectableContainer from "./components/SelectableContainer"
 import { useDispatch, useSelector } from 'react-redux'
 import { setForm } from '~/stores/form'
 import { useEffect, useState } from "react";
-
+import { addOnOptions } from "~/globals/planData";
 
 export default function StepThree() {
 
@@ -25,13 +25,6 @@ export default function StepThree() {
 
     dispatch(setForm({ ...updatedForm, ...{ addOns: updatedAddOns } }))
   }
-
-  const addOnOptions = {
-    'Online service': { price: { monthly: 1, yearly: '10' }, description: 'Access to multiplayer games' },
-    'Larger storage': { price: { monthly: 2, yearly: '20' }, description: 'Extra 1TB of cloud save' },
-    'Customizable Profile': { price: { monthly: 2, yearly: '20' }, description: 'Custom theme on your profile' }
-  }
-
 
 
   return (
