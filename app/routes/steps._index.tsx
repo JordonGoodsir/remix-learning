@@ -2,8 +2,7 @@ import HeaderAndText from "./components/HeaderAndText";
 import CustomInput from "./components/CustomInput";
 import { useDispatch, useSelector } from 'react-redux'
 import { setForm } from '~/stores/form'
-import { useBeforeUnload } from "@remix-run/react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 
 

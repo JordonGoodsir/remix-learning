@@ -1,18 +1,21 @@
-import { useState } from "react";
 import HeaderAndText from "./components/HeaderAndText";
 import SelectableContainer from "./components/SelectableContainer"
-import ToggleYearlyGroup from "./components/stepTwo/ToggleYearlyGroup";
+import { useDispatch, useSelector } from 'react-redux'
+import { setForm } from '~/stores/form'
+import { useEffect, useState } from "react";
 
 
 export default function StepThree() {
-  const [yearlyToggle, setYearlyToggle] = useState(false)
-  const [selectedAddOns, setSelectedAddOns] = useState([])
+
+  const dispatch = useDispatch()
+  const initForm = useSelector((state) => state.formStore).form
+  const [updatedForm, setUpdatedForm] = useState({ ...initForm })
 
   const addAddOn = (addOn) => {
 
-    const foundAddOnIndex = selectedAddOns.findIndex((extra) => addOn === extra)
+    const foundAddOnIndex = initForm.addOns.findIndex((extra) => addOn === extra)
 
-    let updatedAddOns = [...selectedAddOns]
+    let updatedAddOns = [...initForm.addOns]
 
     if (foundAddOnIndex > -1) {
       updatedAddOns.splice(foundAddOnIndex, 1)
@@ -20,8 +23,7 @@ export default function StepThree() {
       updatedAddOns.push(addOn)
     }
 
-    setSelectedAddOns(updatedAddOns)
-
+    dispatch(setForm({ ...updatedForm, ...{ addOns: updatedAddOns } }))
   }
 
   const addOnOptions = {
@@ -39,16 +41,16 @@ export default function StepThree() {
       {Object.keys(addOnOptions).map((addOn) => {
         return (
           <div key={addOn}>
-            <SelectableContainer selected={selectedAddOns.includes(addOn)} onSelected={() => addAddOn(addOn)} content={
+            <SelectableContainer selected={initForm.addOns.includes(addOn)} onSelected={() => addAddOn(addOn)} content={
               <div className="flex gap-3 justify-between items-center">
                 <div className="flex gap-3 items-center">
-                  <div className={`h-5 w-5 flex items-center justify-center rounded-md ${selectedAddOns.includes(addOn) ? 'bg-purplishBlue' : 'bg-white border border-coolGrey'}`}>{selectedAddOns.includes(addOn) ? <img src="/assets/images/icon-checkmark.svg" /> : null}</div>
+                  <div className={`h-5 w-5 flex items-center justify-center rounded-md ${initForm.addOns.includes(addOn) ? 'bg-purplishBlue' : 'bg-white border border-coolGrey'}`}>{initForm.addOns.includes(addOn) ? <img src="/assets/images/icon-checkmark.svg" /> : null}</div>
                   <div className="flex flex-col">
                     <h5 className="text-marineBlue font-medium">{addOn}</h5>
                     <p className="text-coolGray text-xs">{addOnOptions[addOn].description}</p>
                   </div>
                 </div>
-                <p className="text-purplishBlue text-sm">{`+$${addOnOptions[addOn].price[yearlyToggle ? 'yearly' : 'monthly']}/${yearlyToggle ? 'yr' : 'mo'}`}</p>
+                <p className="text-purplishBlue text-sm">{`+$${addOnOptions[addOn].price[initForm.yearly ? 'yearly' : 'monthly']}/${initForm.yearly ? 'yr' : 'mo'}`}</p>
               </div>
             } />
           </div>

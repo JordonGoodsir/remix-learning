@@ -15,7 +15,6 @@ export const form = createSlice({
     reducers: {
         setForm: (state, updatedForm) => {
             state.form = { ...form, ...updatedForm.payload }
-
         },
     },
 })
