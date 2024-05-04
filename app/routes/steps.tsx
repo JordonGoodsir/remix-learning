@@ -3,23 +3,32 @@ import { Link, Outlet, json, useBeforeUnload, useLoaderData } from "@remix-run/r
 import { useLocation } from "@remix-run/react";
 import CustomButton from "~/routes/components/CustomButton"
 import { useNavigate } from "@remix-run/react";
-
-export const loader = async (all: LoaderFunctionArgs) => {
-  console.error(all)
-  return json(all)
-}
+import { useEffect } from "react";
+import { useSelector } from 'react-redux'
 
 
 export default function Index() {
   const steps = [
-    '/steps',
-    '/steps/step-two',
-    '/steps/step-three',
-    '/steps/step-four',
+    { route: '/steps', requiredFields: [] },
+    { route: '/steps/step-two', requiredFields: ['email', 'mobileNumber', 'name'] },
+    { route: '/steps/step-three', requiredFields: ['email', 'mobileNumber', 'name', 'plan'] },
+    { route: '/steps/step-four', requiredFields: ['email', 'mobileNumber', 'name', 'plan'] },
   ]
   const currentPath = useLocation().pathname;
-  const currentPathIndex = steps.findIndex((step) => step === currentPath)
+  const currentPathIndex = steps.findIndex((step) => step.route === currentPath)
   const navigate = useNavigate();
+
+  const initForm = useSelector((state) => state.formStore).form
+
+  const canVisit = (index: number) => {
+    return !!!steps[index].requiredFields.filter((field) => !initForm[field]).length
+  }
+
+  useEffect(() => {
+    if (!canVisit(currentPathIndex)) {
+      navigate('/steps')
+    }
+  })
 
   return (
     <div className="relative flex flex-col overflow-hidden h-screen">
@@ -27,8 +36,8 @@ export default function Index() {
         <div className="flex gap-3">
           {steps.map((step, index) => {
             return (
-              <Link to={step} key={index + '_nav'}
-                className={`flex items-center justify-center border rounded-full h-[35px] w-[35px] ${currentPath === step ? 'bg-lightBlue text-black border-0' : 'border-white text-white'}`}
+              <Link to={step.route} key={index + '_nav'}
+                className={`flex items-center justify-center border rounded-full h-[35px] w-[35px] ${currentPath === step.route ? 'bg-lightBlue text-black border-0' : 'border-white text-white'}`}
               >
                 {index + 1}
               </Link>
@@ -45,10 +54,9 @@ export default function Index() {
           <Outlet />
         </div>
       </div>
-
       <div className="z-20 relative flex basis-auto shrink-0 justify-self-end p-5 justify-between">
-        {currentPathIndex > 0 ? <CustomButton clicked={() => navigate(steps[currentPathIndex - 1])} type="noBorder" text="Go Back" /> : <div />}
-        {currentPathIndex < (steps.length - 1) ? <CustomButton clicked={() => navigate(steps[currentPathIndex + 1])} type="secondary" text="Next Step" /> : <CustomButton type="primary" text="Confirm" />}
+        {currentPathIndex > 0 ? <CustomButton clicked={() => navigate(steps[currentPathIndex - 1].route)} type="noBorder" text="Go Back" /> : <div />}
+        {currentPathIndex < (steps.length - 1) ? <CustomButton clicked={() => navigate(steps[currentPathIndex + 1].route)} type="secondary" text="Next Step" disabled={!canVisit(currentPathIndex + 1)} /> : <CustomButton type="primary" text="Confirm" />}
       </div>
 
 

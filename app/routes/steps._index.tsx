@@ -2,7 +2,7 @@ import HeaderAndText from "./components/HeaderAndText";
 import CustomInput from "./components/CustomInput";
 import { useDispatch, useSelector } from 'react-redux'
 import { setForm } from '~/stores/form'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -11,6 +11,10 @@ export default function StepOne() {
     const dispatch = useDispatch()
     const initForm = useSelector((state) => state.formStore).form
     const [updatedForm, setUpdatedForm] = useState({ ...initForm })
+
+    useEffect(() => {
+        setUpdatedForm(initForm)
+    }, [initForm])
 
     return (
         <div className="flex flex-col gap-5">

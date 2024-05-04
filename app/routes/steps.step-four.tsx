@@ -1,13 +1,11 @@
 import HeaderAndText from "./components/HeaderAndText";
-import SelectableContainer from "./components/SelectableContainer"
-import ToggleYearlyGroup from "./components/stepTwo/ToggleYearlyGroup";
-import { useDispatch, useSelector } from 'react-redux'
-import { setForm } from '~/stores/form'
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux'
 import { addOnOptions, planOptions } from "~/globals/planData";
 
 
 export default function StepFour() {
+
+
   const initForm = useSelector((state) => state.formStore).form
 
   const totalPrice = planOptions[initForm.year ? 'yearly' : 'monthly'][initForm.plan].price + initForm.addOns.reduce((total, addOn) => total += addOnOptions[addOn].price[initForm.year ? 'yearly' : 'monthly'], 0)
